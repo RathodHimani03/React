@@ -1,6 +1,7 @@
+import React from 'react';
 import './ExpenseItem.css';
-
-
+import ExpenseDate from './ExpenseDate.js';
+import Card from '../UI/Card';
 
 //getting whole object as props
 // function ExpenseItem(props) {
@@ -20,18 +21,20 @@ import './ExpenseItem.css';
 
 
 //dstructuring getting object
-function ExpenseItem({date,title,amount}) {
+function ExpenseItem(props) {
 
+   
 
 
     return (
-        <div className="expense-item">
-            <div>{date.toISOString()}</div>
+        <Card className="expense-item">
+            <ExpenseDate date={props.date} />
+            {/* <div>{props.date.toISOString()}</div> */}
             <div className='expense-item__description'>
-                <h2>{title}</h2>
-                <div className='expense-item__price'>${amount }</div> 
+                <h2>{props.title}</h2>
+                <div className='expense-item__price'>${props.amount }</div> 
             </div>
-        </div>
+        </Card>
     );
 }
 
