@@ -1,5 +1,6 @@
-import ExpenseItem from "./components/ExpenseItem";
 
+import React from 'react';
+import Expenses from './components/Expenses/Expenses';
 
 function App() {
   const expenses = [
@@ -24,12 +25,20 @@ function App() {
     },
   ];
 
+  //alternate of jsx
+  // return React.createElement(
+  //  'div',
+  //  {},
+  //  React.createElement('h2',{},"Let's get Started"),
+  //  React.createElement(Expenses,{ items: expenses })
+
+  // )
+
+
   return (
     <div>
       <h2>Let's get started!</h2>
-      <ExpenseItem title={expenses[0].title} amount={expenses[0].amount} date={expenses[0].date}> </ExpenseItem> 
-      {/* <ExpenseItem expense = {expenses[0]}> </ExpenseItem>
-      <ExpenseItem expense = {expenses[1]}> </ExpenseItem> */}
+      <Expenses items={expenses} />
     </div>
   );
 }
