@@ -1,34 +1,34 @@
 import classes from './Counter.module.css';
-import { useState } from 'react';
+import { counterActions } from '../store/counter-slice';
 import { useSelector, useDispatch } from 'react-redux';
-import Component from 'react-dom';
+
 
 const Counter = () => {
 
 
   //automatecally set up subsctiption by the useSelector
-  const counter = useSelector(state => state.counter);
-   const show = useSelector(state => state.showCounter)
+  const counter = useSelector(state => state.counter.counter);
+   const show = useSelector(state => state.counter.showCounter)
 
   //use to update the state of the component and return a new state.
   const dispatch = useDispatch()
 
   const incrementHandler = () => {
-    dispatch({ type: 'increment' })
+    dispatch(counterActions.increment())
   }
 
   const DecrementHandler = () => {
-    dispatch({ type: 'decrement' })
+    dispatch(counterActions.decrement())
   }
 
   const increseHandler = (amount) => {
-    dispatch({ type: 'increase', amount: amount })
+    dispatch(counterActions.increase(amount))
   }
 
 
 
   const toggleCounterHandler = () => {
-    dispatch({type:'toggle'})
+    dispatch(counterActions.toggleCounter())
   };
 
   return (
