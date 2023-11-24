@@ -21,38 +21,68 @@
 // BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import EventsPage from './pages/EventsPage';
+import EventsPage, { loader as eventLoader } from './pages/EventsPage';
 import HomePage from './pages/HomePage';
-import EventDetailPage from './pages/EventDetailPage';
+import EventDetailPage, { loader as eventDetailLoader, action as deleteEventAction } from './pages/EventDetailPage';
 import NewEventPage from './pages/NewEventPage';
 import EditEventPage from './pages/EditEventPage';
 import RootLayout from './pages/Root';
 import EventRootLayout from './pages/EventRoot';
+import ErroPage from './pages/Error';
+import { action as manipulateEventAction } from './components/EventForm'
+import NewsletterPage ,{action as newsletterAction} from './pages/NewSeletter'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <ErroPage />,
     children: [
       { index: true, element: <HomePage /> },
       {
         path: 'events',
         element: <EventRootLayout />,
         children: [
-          { path: '', element: <EventsPage /> },
-          { path: ':eventId', element: <EventDetailPage /> },
-          { path: 'new', element: <NewEventPage /> },
-          { path: ':eventId/edit', element: <EditEventPage /> },
-
-        ]
-
-      }
-    ]
-  }])
-
+          {
+            index: true,
+            element: <EventsPage />,
+            loader: eventLoader,
+          },
+          {
+            path: ':eventId',
+            id: 'event-detail',
+            loader: eventDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <EventDetailPage />,
+                action: deleteEventAction,
+              },
+              {
+                path: 'edit',
+                element: <EditEventPage />,
+                action: manipulateEventAction,
+              },
+            ],
+          },
+          {
+            path: 'new',
+            element: <NewEventPage />,
+            action: manipulateEventAction,
+          },
+        ],
+      },
+      {
+        path: 'newsletter',
+        element: <NewsletterPage />,
+        action: newsletterAction,
+      },
+    ],
+  },
+]);
 
 function App() {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }
 
 export default App;
