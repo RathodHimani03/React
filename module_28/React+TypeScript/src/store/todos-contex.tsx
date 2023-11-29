@@ -13,7 +13,7 @@ export const TodosContext = createContext<TodosObject>({
   removeTodo: (id: string) => {},
 });
 
-const TodosContextProvider: React.FC = (props) => {
+export const TodosContextProvider: React.FC = (props) => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   const onAddTodo = (todoText: string) => {
@@ -23,7 +23,7 @@ const TodosContextProvider: React.FC = (props) => {
     });
   };
 
-  const onRemoveHandle = ({id}:{id:string}) => {
+  const onRemoveHandle = (id:string) => {
     setTodos((prevTodo) => {
       return prevTodo.filter((todo) => todo.id !== id);
     });
